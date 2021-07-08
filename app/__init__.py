@@ -3,19 +3,19 @@ import os
 
 # import json
 from flask import Flask, session
-from flask_mail import Mail
+# from flask_mail import Mail
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
-from flask_user import UserManager
+# from flask_user import UserManager
 from flask_wtf.csrf import CSRFProtect
 from flask_session import Session
 from flask_bootstrap import Bootstrap
-# from flask_login import LoginManager
+from flask_login import LoginManager
 
 # Instantiate Flask extensions
 db = SQLAlchemy()
 csrf_protect = CSRFProtect()
-mail = Mail()
+# mail = Mail()
 migrate = Migrate()
 
 from config import DevelopmentConfig
@@ -58,6 +58,9 @@ def create_app(config_class=DevelopmentConfig):
     # Setup WTForms CSRFProtect
     csrf_protect.init_app(app)
 
+    # login_manager = LoginManager()
+    # login_manager.init_app( app )
+
     # Add modules/packages
     # Register blueprints
     # from app.auth import bp as auth_bp
@@ -71,17 +74,24 @@ def create_app(config_class=DevelopmentConfig):
 
     from app.controllers.controller1 import main_blueprint
     from app.controllers.apis import api_blueprint
-    from app.controllers.controller2 import controller2_blueprint
+    # from app.controllers.controller2 import controller2_blueprint
     app.register_blueprint(main_blueprint)
     app.register_blueprint(api_blueprint)
-    app.register_blueprint(controller2_blueprint)
+    # app.register_blueprint(controller2_blueprint)
     csrf_protect.exempt(api_blueprint)
 
     # Setup Flask-User to handle user account related forms
-    from .models.user_models import User, MyRegisterForm
-    from .controllers.controller1 import user_profile_page
+    # from .models.user_models import User, MyRegisterForm
+    # from .controllers.controller1 import user_profile_page
 
-    user_manager = UserManager(app, db, User)
+    # user_manager = UserManager(app, db, User)
+    login_manager = LoginManager( app )
+    # login_manager = LoginManager( app )
+    # login_manager.init_app( app )
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return user_id
 
     return app
 

@@ -1,11 +1,14 @@
 # Copyright 2021 Simone Corti . All rights reserved
 
-from flask_user import UserMixin
-from flask_user.forms import RegisterForm
+from flask_login import UserMixin, login_manager
+# from flask_user.forms import RegisterForm
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, validators
 from app import db
 
+# @login_manager.user_loader
+# def load_user(user_id):
+#     return User.get(user_id)
 
 # Define the User data model. Make sure to add the flask_user.UserMixin !!
 class User(db.Model, UserMixin):
@@ -71,8 +74,8 @@ class UsersRoles(db.Model):
 
 # Define the User registration form
 # It augments the Flask-User RegisterForm with additional fields
-class MyRegisterForm(RegisterForm):
-    full_name = StringField('Full Name', validators=[validators.DataRequired('Full Name is required')])
+# class MyRegisterForm(RegisterForm):
+#     full_name = StringField('Full Name', validators=[validators.DataRequired('Full Name is required')])
 
 
 # Define the User profile form
