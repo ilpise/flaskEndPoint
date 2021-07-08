@@ -1,0 +1,102 @@
+{% extends "common/dark_base.html" %}
+
+{% block content %}
+
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">Home</li>
+    <li class="breadcrumb-item active">DAb list</li>
+  </ol>
+
+<div class="container-fluid">
+	<div class="animated fadeIn">
+		<h3>dab list</h3>
+        <div class="card">
+          <div class="card-body">
+            <table class="table table-responsive-sm table-hover table-outline mb-0">
+              <thead class="thead-light">
+                <tr>
+                  <th>Active</th>
+                  <th>Name</th>
+                  <th>Usage</th>
+                  <th class="text-center">Payment Method enabled</th>
+                  <th>Activity</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for dab in dabs %}
+                <tr>
+                  <td class="text-center">
+                    <div class="avatar">
+                      <span class="avatar-status badge-success"></span>
+                    </div>
+                  </td>
+                  <td>
+                    <div><a href={{ url_for('controller2.dab', dab_id=dab.primary_key) }}>{{ dab.HumanName }}</a></div>
+                    <div class="small text-muted">
+<!--                      Registered: Jul 1, 2021-->
+                      Portainer name: {{ dab.Name }}
+                    </div>
+                  </td>
+                  <td>
+                    <div class="clearfix">
+                      <div class="float-left">
+                        <strong>50%</strong>
+                      </div>
+                      <div class="float-right">
+                        <small class="text-muted">Jul 1, 2021 - Jul 31, 2021 </small>
+                      </div>
+                    </div>
+                    <div class="progress progress-xs">
+                      <div class="progress-bar bg-success" role="progressbar" style="width: 50%" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                  </td>
+                  <td class="text-center">
+                    <i class="fa fa-cc-mastercard" style="font-size:24px"></i>
+                  </td>
+                  <td>
+                    <div class="small text-muted">Last usage</div>
+                    <strong>10 sec ago</strong>
+                  </td>
+                </tr>
+                {% endfor %}
+<!--                <tr>-->
+<!--                  <td class="text-center">-->
+<!--                    <div class="avatar">-->
+<!--                      <span class="avatar-status badge-success"></span>-->
+<!--                    </div>-->
+<!--                  </td>-->
+<!--                  <td>-->
+<!--                    <div>Dab Melzo</div>-->
+<!--                    <div class="small text-muted">-->
+<!--                      Registered: Jul 1, 2021-->
+<!--                    </div>-->
+<!--                  </td>-->
+<!--                  <td>-->
+<!--                    <div class="clearfix">-->
+<!--                      <div class="float-left">-->
+<!--                        <strong>10%</strong>-->
+<!--                      </div>-->
+<!--                      <div class="float-right">-->
+<!--                        <small class="text-muted">Jul 1, 2021 - Jul 31, 2021 </small>-->
+<!--                      </div>-->
+<!--                    </div>-->
+<!--                    <div class="progress progress-xs">-->
+<!--                      <div class="progress-bar bg-info" role="progressbar" style="width: 10%" aria-valuenow="10" aria-valuemin="0" aria-valuemax="100"></div>-->
+<!--                    </div>-->
+<!--                  </td>-->
+<!--                  <td class="text-center">-->
+<!--                    <i class="fa fa-cc-visa" style="font-size:24px"></i>-->
+<!--                  </td>-->
+<!--                  <td>-->
+<!--                    <div class="small text-muted">Last usage</div>-->
+<!--                    <strong>5 minutes ago</strong>-->
+<!--                  </td>-->
+<!--                </tr>-->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+	</div>
+</div>
+{% endblock %}

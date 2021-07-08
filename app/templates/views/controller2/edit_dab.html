@@ -1,0 +1,83 @@
+{% extends "common/dark_base.html" %}
+
+{% block content %}
+
+{% from "common/form_macros.html" import render_field, render_submit_field %}
+  <!-- Breadcrumb-->
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">Home</li>
+    <li class="breadcrumb-item active">{{ dab.HumanName }}</li>
+  </ol>
+
+<div class="container-fluid">
+	<div class="animated fadeIn">
+        <div class="card">
+          <div class="card-header ">
+            <div class="row">
+              <div class="col">
+                <strong>Edit {{ dab.HumanName }}</strong>
+                <div class="small text-muted">Portainer name: {{ dab.Name }}</div>
+              </div>
+              <div class="col">
+                  <a href={{ url_for('controller2.dab', dab_id=dab.primary_key) }} class="btn btn-pill btn-sm btn-primary pull-right">View</a>
+              </div>
+            </div>
+          </div>
+          <div class="card-body">
+            {# {{ dab }} #}
+            <div class="row">
+              <div class="col">
+                <div id="dashmap" style="height: 30vh;"></div>
+              </div>
+              <div class="col">
+                <form action="" method="POST" class="form" role="form">
+                  {{ form.hidden_tag() }}
+                        <div class="form-group">
+                            <label for="humanname">Title</label>
+                            <input type="text" class="form-control" id="humanname" name="humanname" placeholder="Enter a label for this DAb" value="{{ dab.HumanName or '' }}">
+                        </div>
+<!--                        <div class="form-group">-->
+<!--                            <label for="first_name">First Name</label>-->
+<!--                            <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter first name" value="{# {{ user.first_name or '' }} #}">-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <label for="last_name">Last Name</label>-->
+<!--                            <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter last name" value="{# {{ user.last_name or ''}} #}">-->
+<!--                        </div>-->
+<!--                        <div class="form-group">-->
+<!--                            <label for="email">Email</label>-->
+<!--                            <input type="text" class="form-control" id="email" name="email" placeholder="Enter an email address" value="{# {{ user.email or '' }} #}">-->
+<!--                        </div>-->
+                  <button type="submit" class="btn btn-sm btn-primary "><i class="fa fa-dot-circle-o "></i> Submit</button>
+                  <button type="reset" class="btn btn-sm btn-danger "><i class="fa fa-ban "></i> Reset</button>
+                </form>
+
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+	</div>
+</div>
+
+
+<script type="text/javascript">
+  var csrf_token = "{{ csrf_token() }}";
+
+  $.ajaxSetup({
+      beforeSend: function(xhr, settings) {
+          if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+              xhr.setRequestHeader("X-CSRFToken", csrf_token);
+          }
+      }
+  });
+
+  var dabId ='{{ dab.primary_key }}'
+  var lat ='{{ dab.lat }}'
+  var lng ='{{ dab.lon }}'
+  var dabName ='{{ dab.Name }}'
+</script>
+
+<script src="{{ url_for('static', filename='js/edit_map.js') }}"></script>
+{% endblock %}

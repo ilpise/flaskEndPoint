@@ -1,0 +1,83 @@
+{% extends "common/dark_base.html" %}
+
+{% block content %}
+
+{% from "common/form_macros.html" import render_field, render_submit_field %}
+  <!-- Breadcrumb-->
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">Home</li>
+    <li class="breadcrumb-item">Admin</li>
+    <li class="breadcrumb-item"><a href="{{ url_for('main.user_admin_page') }}">Manage Users</a></li>
+    <li class="breadcrumb-item"><a href={{ url_for('main.create_or_edit_user_page', user_id=user.id) }}>{{user.name()}}</a></li>
+
+  </ol>
+  <div class="container-fluid">
+    <div class="animated fadeIn">
+      <div class="card ">
+        <form action="" method="POST" class="form" role="form">
+          <div class="card-header ">
+              {% if user.id %}
+                <strong>Edit User</strong>
+              {% else %}
+                <strong>Create User</strong>
+              {% endif %}
+
+<!--            <a href="{{ url_for('main.manage_user_roles', user_id=user.id) }}" class="btn btn-sm btn-primary pull-right">Manage Roles</a> -->
+          </div>
+          <div class="card-body ">
+                {{ form.hidden_tag() }}
+              <div class="row">
+                <div class="col">
+                    <div class="form-group">
+                        <label for="username">Username</label>
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Enter username" value="{{ user.username or '' }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="first_name">First Name</label>
+                        <input type="text" class="form-control" id="first_name" name="first_name" placeholder="Enter first name" value="{{ user.first_name or '' }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="last_name">Last Name</label>
+                        <input type="text" class="form-control" id="last_name" name="last_name" placeholder="Enter last name" value="{{ user.last_name or ''}}">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="text" class="form-control" id="email" name="email" placeholder="Enter an email address" value="{{ user.email or '' }}">
+                    </div>
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="text" class="form-control" id="password" name="password" placeholder="Enter password" value="">
+                    </div>
+                </div>
+                <div class="col">
+                  {% for role in roles %}
+                    {% if role.id in user_roles|map(attribute="id") %}
+                    <div class="form-check">
+                        <input type="checkbox" name="role" class="form-check-input" value="{{ role.name }}" checked=true>
+                        <label class="form-check-label">{{ role.label }}</label>
+                    </div>
+                    {% else %}
+                    <div class="form-check">
+                        <input type="checkbox" name="role" class="form-check-input" value="{{ role.name }}">
+                        <label class="form-check-label">{{ role.label }}</label>
+                    </div>
+                    {% endif %}
+                  {% endfor %}
+                  {# {% for user_role in user_roles %} #}
+<!--                    <div class="form-check">-->
+<!--                        <input type="checkbox" class="form-check-input">-->
+<!--                        <label class="form-check-label">{# {{ user_role.id }} #}</label>-->
+<!--                    </div>-->
+                  {# {% endfor %} #}
+
+                </div>
+              </div>
+          </div>
+          <div class="card-footer ">
+            <button type="submit" class="btn btn-sm btn-primary "><i class="fa fa-dot-circle-o "></i> Submit</button>
+            <button type="reset" class="btn btn-sm btn-danger "><i class="fa fa-ban "></i> Reset</button>
+          </div>
+        </form>
+      </div>
+</div>
+{% endblock %}
