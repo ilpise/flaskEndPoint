@@ -16,10 +16,7 @@ setup(
         'pyserial',
         'sqlalchemy',
         'Flask-Session',
-        'Flask-User',
         'Flask-Migrate',
-        'Flask-Script',
-        'email-validator',
         'requests'
     ],
     classifiers=[
