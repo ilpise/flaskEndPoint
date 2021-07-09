@@ -21,26 +21,17 @@ main_blueprint = Blueprint('main', __name__, template_folder='templates')
 
 @main_blueprint.route("/login", methods=['GET', 'POST'])
 def login():
+    if current_user.is_authenticated:
+        return redirect( url_for( 'index' ) )
+
     form = LoginForm(request.form)
     # print(form)
 
     if request.method == 'POST':
-        # print('POST')
-        # print( request.form )
-
-        # Logic to get Bearer from Portainer
-        res = requests.post('http://localhost:9000/api/auth',
-                            json={"password": request.form['password'], "username": request.form['username']}
-                           )
-        if res.status_code == 200:
-            print(res.json())
-            session["port_auth_jwt"] = res.json()
-            # t = session.get("test")
-            user = User.query.filter( User.username == request.form['username'] ).first()
-            if user:
-                # print('user found')
-                login_user( user )
-                return redirect(url_for('main.member_page'))
+        user = User.query.filter_by( username=request.form['username'] ).first()
+        print(user)
+        login_user(user)
+        flash('Logged in successfully.')
 
     return render_template('flask_user/login.html', title='Login', form=form)
 
@@ -51,13 +42,14 @@ def login():
                       # methods=['GET', 'POST']
                       )
 def member_page():
+    print(current_user)
     if not current_user.is_authenticated:
         return redirect(url_for('main.login'))
 
     return render_template('views/controller1/member_base.html')
 
 
-@main_blueprint.route("/settings")
-@login_required
-def settings():
-    pass
+# @main_blueprint.route("/settings")
+# @login_required
+# def settings():
+#     pass

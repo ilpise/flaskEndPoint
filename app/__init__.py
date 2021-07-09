@@ -14,6 +14,7 @@ from flask_login import LoginManager
 
 # Instantiate Flask extensions
 db = SQLAlchemy()
+login_manager = LoginManager()
 csrf_protect = CSRFProtect()
 # mail = Mail()
 migrate = Migrate()
@@ -85,13 +86,13 @@ def create_app(config_class=DevelopmentConfig):
     # from .controllers.controller1 import user_profile_page
 
     # user_manager = UserManager(app, db, User)
-    login_manager = LoginManager( app )
+    # login = LoginManager( app )
     # login_manager = LoginManager( app )
     # login_manager.init_app( app )
-
-    @login_manager.user_loader
-    def load_user(user_id):
-        return user_id
+    login_manager.init_app(app)
+    # @login_manager.user_loader
+    # def load_user(user_id):
+    #     return user_id
 
     return app
 

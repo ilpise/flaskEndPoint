@@ -4,11 +4,12 @@ from flask_login import UserMixin, login_manager
 # from flask_user.forms import RegisterForm
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, validators
-from app import db
+from app import db, login_manager
 
-# @login_manager.user_loader
-# def load_user(user_id):
-#     return User.get(user_id)
+@login_manager.user_loader
+def load_user(user_id):
+    print(user_id)
+    return User.query.filter_by(id=user_id).first()
 
 # Define the User data model. Make sure to add the flask_user.UserMixin !!
 class User(db.Model, UserMixin):
