@@ -2,9 +2,8 @@
 
 from flask import Blueprint, redirect, render_template, current_app, session
 from flask import request, url_for, flash, send_from_directory, jsonify, render_template_string
-# from flask_user import current_user, login_required, roles_accepted
 from flask_session import Session
-from flask_login import login_user, current_user, login_required
+from flask_login import login_user, current_user, logout_user
 
 
 from app.models.user_models import LoginForm, User
@@ -22,20 +21,27 @@ main_blueprint = Blueprint('main', __name__, template_folder='templates')
 @main_blueprint.route("/login", methods=['GET', 'POST'])
 def login():
     if current_user.is_authenticated:
-        return redirect( url_for( 'index' ) )
+        return redirect(url_for('main.member_page'))
 
     form = LoginForm(request.form)
-    # print(form)
-
     if request.method == 'POST':
         user = User.query.filter_by( username=request.form['username'] ).first()
         print(user)
+
+        if user is None:
+            flash('The user is not registered')
+            return redirect(url_for('main.login'))
+
         login_user(user)
         flash('Logged in successfully.')
+        return redirect(url_for('main.member_page'))
 
-    return render_template('flask_user/login.html', title='Login', form=form)
+    return render_template('auth/login.html', title='Login', form=form)
 
-
+@main_blueprint.route('/logout')
+def logout():
+    logout_user()
+    return redirect(url_for('main.login'))
 
 # The User page is accessible to authenticated users (users that have logged in)
 @main_blueprint.route('/',
