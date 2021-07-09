@@ -1,8 +1,7 @@
-# import os
 from setuptools import setup
 
 setup(
-    name = 'DAb',
+    name = 'DAb Endpoint',
     version='1.0',
     license='GNU General Public License v3',
     author='Simone Corti',
@@ -12,7 +11,6 @@ setup(
     platforms='any',
     install_requires=[
         'Flask',
-        'bootstrap-flask',
         'pyserial',
         'sqlalchemy',
         'Flask-Session',
