@@ -17,7 +17,8 @@ setup(
         'sqlalchemy',
         'Flask-Session',
         'Flask-Migrate',
-        'flask-wtf',
+        'Flask-Login',
+        'Flask-WTF',
         'requests'
     ],
     classifiers=[
