@@ -1,7 +1,10 @@
 # syntax=docker/dockerfile:1
-FROM python:3.7-buster
+FROM arm32v7/python:3.7-buster
 ADD . /flaskEndPoint
 WORKDIR /flaskEndPoint
+#RUN whoami
+#RUN apt-get update
+#RUN apt-get -y install rustc gcc musl-dev libssl-dev libffi-dev
 RUN pip3 install .
 ENTRYPOINT [ "python" ]
 CMD [ "run.py" ]
