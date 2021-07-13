@@ -10,6 +10,8 @@ from app import db
 from app.models.user_models import UserProfileForm
 import uuid, json, os
 import datetime
+from pymodbus.client.asynchronous.tcp import AsyncModbusTCPClient as ModbusClient
+from pymodbus.client.asynchronous import schedulers
 
 from pymodbus.client.sync import ModbusTcpClient
 
@@ -18,8 +20,8 @@ UNIT = 0x1
 
 async def async_get_data(client):
     rr = await client.read_holding_registers( 1, 8, unit=UNIT )
-    print(rr.refisters)
-    await asyncio.sleep(1)
+    print(rr.registers)
+    # await asyncio.sleep(1)
     return 'Done!'
 
 # When using a Flask app factory we must use a blueprint to avoid needing 'app' for '@app.route'
@@ -53,6 +55,13 @@ def read():
 # NOTE: this route does NOT works
 # Install Flask with the 'async' extra in order to use async views.
 @api_blueprint.route('/modbus/api/testasync', methods=['GET'])
-async def read_modbus_async():
-    data = await async_get_data()
-    return data
+def read_modbus_async():
+    # data = await async_get_data()
+    # return data
+    print( "---------------------RUN_WITH_NO_LOOP-----------------" )
+    loop, client = ModbusClient( schedulers.ASYNC_IO, port=5021 )
+    loop.run_until_complete( async_get_data( client.protocol ) )
+    loop.close()
+    print( "--------DONE RUN_WITH_NO_LOOP-------------" )
+
+
