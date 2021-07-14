@@ -41,14 +41,11 @@ api_blueprint = Blueprint('api', __name__, template_folder='templates')
 
 @api_blueprint.route('/modbus/api/testasync', methods=['GET'])
 def read_modbus_async():
-    loop = asyncio.new_event_loop()
-    assert not loop.is_running()
-    asyncio.set_event_loop( loop )
-    new_loop, client = ModbusClient(schedulers.ASYNC_IO, port=5021, loop=loop)
+    new_loop, client = ModbusClient(schedulers.ASYNC_IO, port=5021)
     print ('C1')
     print(client)
     # assert(client is not None)
-    results = loop.run_until_complete( async_get_data( client.protocol ) )
+    results = new_loop.run_until_complete( async_get_data( client.protocol ) )
     ret = {"sample return": results}
     return(jsonify(ret), 200)
 
