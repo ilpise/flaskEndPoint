@@ -1,11 +1,12 @@
 # Copyright 2021 Simone Corti. All rights reserved
 
+# import app
 from flask import Blueprint, redirect, render_template, current_app, session
 from flask import request, url_for, flash, send_from_directory, jsonify, render_template_string
 from flask_session import Session
 from flask_login import login_user, current_user, logout_user
 
-
+import logging
 from app.models.user_models import LoginForm, User
 from app.models.dab_models import Dab
 
@@ -33,6 +34,8 @@ def login():
             return redirect(url_for('main.login'))
 
         login_user(user)
+        logging.info('%s logged in successfully', user.username)
+        # app.logger.info( '%s logged in successfully', user.username )
         flash('Logged in successfully.')
         return redirect(url_for('main.member_page'))
 

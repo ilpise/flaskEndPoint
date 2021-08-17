@@ -34,7 +34,10 @@ async def async_get_data(client):
             print( rr.registers )
             return rr.registers
     else:
-        return 'Error'
+        # uncomment to test concurrent requests
+        # The modbus_server_machine1_1 must be stopped
+        # await asyncio.sleep( 100 )
+        return 'Error - check modbus server is reachable'
 
 # When using a Flask app factory we must use a blueprint to avoid needing 'app' for '@app.route'
 api_blueprint = Blueprint('api', __name__, template_folder='templates')
@@ -46,6 +49,7 @@ def read_modbus_async():
     print(client)
     # assert(client is not None)
     results = new_loop.run_until_complete( async_get_data( client.protocol ) )
+    new_loop.close()
     ret = {"sample return": results}
     return(jsonify(ret), 200)
 
