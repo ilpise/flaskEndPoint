@@ -17,7 +17,9 @@ setup(
         'Flask-Migrate',
         'Flask-Login',
         'Flask-WTF',
-        'requests'
+        'requests',
+        'pymodbus',
+        'pyscard'
     ],
     classifiers=[
         'Development Status :: 4 - Beta',
