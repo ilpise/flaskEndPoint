@@ -18,6 +18,10 @@ import requests
 from smartcard.System import readers
 import array
 
+# Use of pyserial with conversion of HEX values to binary
+# This fits better the command codes of COGES
+import serial
+import serial.tools.list_ports as port_list
 
 # When using a Flask app factory we must use a blueprint to avoid needing 'app' for '@app.route'
 main_blueprint = Blueprint('main', __name__, template_folder='templates')
@@ -147,12 +151,6 @@ def testcoges():
     # print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
     if not current_user.is_authenticated:
         return redirect(url_for('main.login'))
-
-    # Use of pyserial with conversion of HEX values to binary
-    # This fits better the command codes of COGES
-
-    import serial
-    import serial.tools.list_ports as port_list
 
     ports = list(port_list.comports())
     print(ports[0].device)
