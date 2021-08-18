@@ -13,6 +13,7 @@ from app.models.dab_models import Dab
 import uuid, json, os
 import datetime
 import requests
+import time
 
 # Smartcard
 from smartcard.System import readers
@@ -180,6 +181,8 @@ def testcoges():
     fullcommand = format(ord(start), "x")+a+str(command_code)+format(ord(stop), "x")+format(ord(checkarr[0]), "x")+format(ord(checkarr[1]), "x")
     # print(fullcommand.upper())
     serialPort.write(bytes.fromhex(fullcommand))
+
+    time.sleep( 0.5 )
 
     line = serialPort.readline()
     # print( line )
