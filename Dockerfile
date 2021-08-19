@@ -9,8 +9,9 @@ RUN apt-get -y install pcscd swig gcc libpcsclite-dev python-dev pcsc-tools
 # Enable and Start pcscd service
 RUN update-rc.d pcscd defaults add
 # RUN /etc/init.d/pcscd start
-CMD [ "/etc/init.d/pcscd start" ]
 RUN pip3 install .
 ENTRYPOINT [ "python" ]
 CMD [ "run.py" ]
+ENTRYPOINT [ "bash" ]
+CMD [ "/etc/init.d/pcscd start" ]
 
