@@ -190,4 +190,6 @@ def testcoges():
     serialPort.close()
 
     return render_template( 'views/controller1/testcoges.html',
+                            fullcommand=fullcommand,
+                            port=port,
                             line=line)
