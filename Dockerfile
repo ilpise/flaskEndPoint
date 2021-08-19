@@ -13,5 +13,5 @@ RUN pip3 install .
 ENTRYPOINT [ "python" ]
 CMD [ "run.py" ]
 ENTRYPOINT [ "bash" ]
-CMD [ "/etc/init.d/pcscd start" ]
+RUN [ "/etc/init.d/pcscd start" ]
 
