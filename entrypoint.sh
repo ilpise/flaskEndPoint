@@ -8,5 +8,5 @@ update-rc.d pcscd defaults add
 echo "Starting the pcsc daemon"
 service pcscd start
 
-#cd webserver
+#Run the flask application
 python run.py
