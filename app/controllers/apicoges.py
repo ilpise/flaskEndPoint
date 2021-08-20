@@ -20,9 +20,11 @@ def coges_engine():
 
     print(request.get_json())
 
-    ports = list(port_list.comports())
-    print(ports[0].device)
-    port = ports[0].device
+    # ports = list(port_list.comports())
+    # print(ports[0].device)
+    # port = ports[0].device
+
+    port = '/dev/ttyACM0'
     baudrate = 9600
     serialPort = serial.Serial(port=port, baudrate=baudrate,
                                     bytesize=8, timeout=1, stopbits=serial.STOPBITS_ONE)
@@ -54,6 +56,8 @@ def coges_engine():
     # print(type(line))
     serialPort.close()
 
-    ret = {"code": "request", "ports": str(ports) ,"port": port, "sp": str(sp), "response": line.decode('utf-8')}
+    ret = {"code": "request",
+           # "ports": str(ports) ,
+           "port": port, "sp": str(sp), "response": line.decode('utf-8')}
     return(jsonify(ret), 200)
 
