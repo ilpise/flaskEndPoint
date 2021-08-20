@@ -27,6 +27,8 @@ def coges_engine():
     serialPort = serial.Serial(port=port, baudrate=baudrate,
                                     bytesize=8, timeout=1, stopbits=serial.STOPBITS_ONE)
 
+    print(type(serialPort))
+    sp = type(serialPort)
     # COGES PARTS
     start = '{'
     stop = '}'
@@ -52,6 +54,6 @@ def coges_engine():
     # print(type(line))
     serialPort.close()
 
-    ret = {"code": "request", "response": line.decode('utf-8')}
+    ret = {"code": "request", "ports": str(ports) ,"port": port, "sp": str(sp), "response": line.decode('utf-8')}
     return(jsonify(ret), 200)
 
