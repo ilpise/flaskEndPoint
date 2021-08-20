@@ -1,7 +1,6 @@
 # Copyright 2021 Simone Corti. All rights reserved
 
-from flask import Blueprint
-from flask import jsonify
+from flask import Blueprint, request, jsonify
 
 # Use of pyserial with conversion of HEX values to binary
 # This fits better the command codes of COGES
@@ -12,12 +11,14 @@ import serial.tools.list_ports as port_list
 # When using a Flask app factory we must use a blueprint to avoid needing 'app' for '@app.route'
 apicoges_blueprint = Blueprint('apicoges', __name__, template_folder='templates')
 
-@apicoges_blueprint.route('/testcoges', methods=['GET'])
-def testcoges():
+@apicoges_blueprint.route('/coges_engine', methods=['POST'])
+def coges_engine():
     # Use a breakpoint in the code line below to debug your script.
     # print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-    if not current_user.is_authenticated:
-        return redirect(url_for('main.login'))
+    # if not current_user.is_authenticated:
+    #     return redirect(url_for('main.login'))
+
+    print(request.get_json())
 
     ports = list(port_list.comports())
     print(ports[0].device)
@@ -48,8 +49,9 @@ def testcoges():
 
     line = serialPort.readline()
     # print( line )
-
+    # print(type(line))
     serialPort.close()
 
-    ret = {"sample return": line}
+    ret = {"code": "request", "response": line.decode('utf-8')}
     return(jsonify(ret), 200)
+
