@@ -96,11 +96,14 @@ def create_app(config_class=DevelopmentConfig):
 
     from app.controllers.controller1 import main_blueprint
     from app.controllers.apis import api_blueprint
+    from app.controllers.apicoges import apicoges_blueprint
     # from app.controllers.controller2 import controller2_blueprint
     app.register_blueprint(main_blueprint)
     app.register_blueprint(api_blueprint)
+    app.register_blueprint( apicoges_blueprint )
     # app.register_blueprint(controller2_blueprint)
     csrf_protect.exempt(api_blueprint)
+    csrf_protect.exempt( apicoges_blueprint )
 
     login_manager.init_app(app)
 
