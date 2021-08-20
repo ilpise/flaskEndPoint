@@ -66,6 +66,13 @@ def member_page():
 
     return render_template('views/controller1/member_base.html')
 
+@main_blueprint.route('/coges')
+def coges():
+    if not current_user.is_authenticated:
+        return redirect(url_for('main.login'))
+
+    return render_template('views/controller1/testcoges.html')
+
 
 @main_blueprint.route("/testsc")
 def testsc():
@@ -145,51 +152,3 @@ def testsc():
 
     return render_template( 'views/controller1/testsc.html',
                             cognome=cognome)
-
-@main_blueprint.route("/testcoges")
-def testcoges():
-    # Use a breakpoint in the code line below to debug your script.
-    # print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-    if not current_user.is_authenticated:
-        return redirect(url_for('main.login'))
-
-    ports = list(port_list.comports())
-    print(ports[0].device)
-    port = ports[0].device
-    baudrate = 9600
-    serialPort = serial.Serial(port=port, baudrate=baudrate,
-                                    bytesize=8, timeout=1, stopbits=serial.STOPBITS_ONE)
-    serialString = ""
-
-
-    # COGES PARTS
-    start = '{'
-    stop = '}'
-
-    slave_address = '1'
-    command_code = '20' # a1
-
-    # Calculate the checksum
-    a = format(ord(slave_address), "x") # 31
-    checksum = hex(int(a, 16) + int(command_code, 16))
-    # remove the 0x before the number and fill an array
-    # print(checksum[2:])
-    checkarr = list(checksum[2:])
-    # print(checkarr)
-    # print(format(ord(checkarr[0]), "x"))
-    # Compose the command
-    fullcommand = format(ord(start), "x")+a+str(command_code)+format(ord(stop), "x")+format(ord(checkarr[0]), "x")+format(ord(checkarr[1]), "x")
-    # print(fullcommand.upper())
-    serialPort.write(bytes.fromhex(fullcommand))
-
-    time.sleep( 0.5 )
-
-    line = serialPort.readline()
-    # print( line )
-
-    serialPort.close()
-
-    return render_template( 'views/controller1/testcoges.html',
-                            fullcommand=fullcommand,
-                            port=port,
-                            line=line)
