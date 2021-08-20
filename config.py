@@ -17,6 +17,10 @@ class DevelopmentConfig(ProductionConfig):
     SQLALCHEMY_TRACK_MODIFICATIONS = False  # Avoids SQLAlchemy warning
     SESSION_TYPE = 'sqlalchemy'
 
+    # OPENPLC
+    OPENPLC_IP = '172.17.0.4'
+    OPENPLC_MODBUS_PORT = 502
+
 
 # class TestingConfig(ProductionConfig):
 #     DEBUG = False

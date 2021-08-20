@@ -63,19 +63,28 @@ def sample_page():
 # Synchronous Client
 @api_blueprint.route('/modbus/api/', methods=['GET'])
 def read():
-
-    # NOTE - the default port for modbus is 502 o 5020?? but the server we implemented run on 5021
-    client = ModbusTcpClient( 'localhost', port=5021 )
+    OpenplcIp = current_app.config["OPENPLC_IP"]
+    ModbusPort = current_app.config["OPENPLC_MODBUS_PORT"]
+    # NOTE - the default port for modbus is 502 but the server we implemented run on 5021
+    client = ModbusTcpClient( OpenplcIp, port=ModbusPort )
     client.connect()
     # logging.info( '%s logged in successfully', user.username )
 
-    rr = client.read_holding_registers( 0, 8, unit=UNIT )
+    rr = client.read_holding_registers( 41024, 1, unit=UNIT )
+
+    # # NOTE - the default port for modbus is 502 but the server we implemented run on 5021
+    # client = ModbusTcpClient( 'localhost', port=5021 )
+    # client.connect()
+    # # logging.info( '%s logged in successfully', user.username )
+    # rr = client.read_holding_registers( 0, 8, unit=UNIT )
+
+
     assert (not rr.isError())
     print(rr)
     print(rr.registers)
     # logging.info( '%s logged in successfully', user.username )
 
-    ret = {"sample return": 10}
+    ret = {"sample return": rr.registers}
     return(jsonify(ret), 200)
 
 
