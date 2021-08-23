@@ -17,9 +17,11 @@ setup(
         'Flask-Migrate',
         'Flask-Login',
         'Flask-WTF',
+        'flask-socketio',
         'requests',
         'pymodbus',
-        'pyscard'
+        'pyscard',
+        'eventlet'
     ],
     classifiers=[
         'Development Status :: 4 - Beta',
