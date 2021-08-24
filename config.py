@@ -6,13 +6,15 @@ class ProductionConfig(object):
 
 
 class DevelopmentConfig(ProductionConfig):
-    DEBUG = True
+    # DEBUG = True
+    DEBUG = False
     TESTING = False
 
     # Flask settings
     CSRF_ENABLED = True
 
     # Flask-SQLAlchemy settings
+
     SQLALCHEMY_DATABASE_URI = 'sqlite:///quickstart_app.sqlite'  # File-based SQL database
     SQLALCHEMY_TRACK_MODIFICATIONS = False  # Avoids SQLAlchemy warning
     SESSION_TYPE = 'sqlalchemy'

@@ -7,6 +7,7 @@ from smartcard.System import readers
 from smartcard.CardMonitoring import CardMonitor, CardObserver
 from smartcard.util import toHexString
 from flask_login import encode_cookie
+from flaskwebgui import FlaskUI
 
 from app import create_app, socketio
 
@@ -66,4 +67,5 @@ if __name__ == "__main__":
     # app.run(host='0.0.0.0', port=port)
     # socket.run( app, host='127.0.0.1', port=8001, debug=True,
     #             use_reloader=False )
-    socketio.run( app )
+    # socketio.run( app )
+    FlaskUI( app, socketio=socketio, start_server="flask-socketio" ).run()
