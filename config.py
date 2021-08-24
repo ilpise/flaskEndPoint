@@ -18,7 +18,8 @@ class DevelopmentConfig(ProductionConfig):
     SESSION_TYPE = 'sqlalchemy'
 
     # OPENPLC
-    OPENPLC_IP = '172.17.0.4'
+    # OPENPLC_IP = '172.17.0.4'
+    OPENPLC_IP = '172.17.0.3'
     OPENPLC_MODBUS_PORT = 502
 
 

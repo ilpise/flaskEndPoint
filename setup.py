@@ -18,6 +18,7 @@ setup(
         'Flask-Login',
         'Flask-WTF',
         'flask-socketio',
+        'flaskwebgui',
         'requests',
         'pymodbus',
         'pyscard',

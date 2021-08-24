@@ -3,13 +3,14 @@
 import logging
 import asyncio
 from flask import Blueprint, jsonify, current_app
-# from flask_user import current_user, login_required, roles_accepted
-
 
 from pymodbus.client.asynchronous.tcp import AsyncModbusTCPClient as ModbusClient
 from pymodbus.client.asynchronous import schedulers
-
 from pymodbus.client.sync import ModbusTcpClient
+
+# from flask_socketio import emit
+from .. import socketio
+
 
 UNIT = 0x1
 
@@ -84,3 +85,34 @@ def read():
     return(jsonify(ret), 200)
 
 
+# @api_blueprint.route('/register', methods=['POST'])
+# def register():
+#     # socketio.emit( 'my event', 'My data', broadcast=True )
+#     socketio.emit( 'my event', jsonify({"data": 'TEST BROAD'}), broadcast=True )
+#     # socketio.emit( 'my response', jsonify( {"data": 'TEST BROAD'} ), broadcast=True )
+#     ret = {"sample return": 10}
+#     return(jsonify(ret), 200)
+
+
+# TEST login with smartcard reader
+# @api_blueprint.route('/sc_login', methods=['GET'])
+# def sc_login():
+#
+#     user = User.query.filter_by( username='admin' ).first()
+#     print( user )
+#
+#     login_user( user )
+#
+#     return redirect( url_for( 'main.member_page' ) )
+
+# @api_blueprint.route('/api/login', methods=['GET', 'POST'])
+# def login():
+#     # user = load_user(request.values.get('username'))
+#     user = User.query.filter_by( username='admin' ).first()
+#     print('api user: ', user)
+#     if user :
+#         login_user(user)
+#         print( current_user )
+#         return jsonify(status='ok', username=user.username)
+#     else:
+#         return jsonify(status='error', message='wrong username or hash')
