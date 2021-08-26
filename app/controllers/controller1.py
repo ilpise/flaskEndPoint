@@ -9,7 +9,7 @@ import logging
 from app.models.user_models import User
 
 import array
-from .. import socketio
+
 
 # Use of pyserial with conversion of HEX values to binary
 # This fits better the command codes of COGES
@@ -19,11 +19,6 @@ from .. import socketio
 # When using a Flask app factory we must use a blueprint to avoid needing 'app' for '@app.route'
 main_blueprint = Blueprint('main', __name__, template_folder='templates')
 
-@main_blueprint.route('/ping', methods=['GET'])
-def ping():
-    # socketio.emit('ping event', {'data': 42}, namespace='/chat')
-    socketio.emit( 'my event', {'data': 42}, broadcast=True )
-    return jsonify({"done" : "ok"})
 
 @main_blueprint.route("/login", methods=['GET', 'POST'])
 def login():

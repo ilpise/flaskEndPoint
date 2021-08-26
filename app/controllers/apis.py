@@ -8,10 +8,6 @@ from pymodbus.client.asynchronous.tcp import AsyncModbusTCPClient as ModbusClien
 from pymodbus.client.asynchronous import schedulers
 from pymodbus.client.sync import ModbusTcpClient
 
-# from flask_socketio import emit
-from .. import socketio
-
-
 UNIT = 0x1
 
 
@@ -83,15 +79,6 @@ def read():
 
     ret = {"sample return": rr.registers}
     return(jsonify(ret), 200)
-
-
-# @api_blueprint.route('/register', methods=['POST'])
-# def register():
-#     # socketio.emit( 'my event', 'My data', broadcast=True )
-#     socketio.emit( 'my event', jsonify({"data": 'TEST BROAD'}), broadcast=True )
-#     # socketio.emit( 'my response', jsonify( {"data": 'TEST BROAD'} ), broadcast=True )
-#     ret = {"sample return": 10}
-#     return(jsonify(ret), 200)
 
 
 # TEST login with smartcard reader

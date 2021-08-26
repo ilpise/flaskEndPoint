@@ -19,16 +19,12 @@ from flask_session import Session
 from flask_login import LoginManager
 from config import DevelopmentConfig
 
-from smartcard.CardMonitoring import CardMonitor, CardObserver
-from smartcard.util import toHexString
-
 
 # Instantiate Flask extensions
 db = SQLAlchemy()
 login_manager = LoginManager()
 csrf_protect = CSRFProtect()
 migrate = Migrate()
-socketio = SocketIO()
 
 UNIT = 0x1
 
@@ -82,27 +78,6 @@ def test_modbus_thread():
 
 
 def create_app(config_class=DevelopmentConfig):
-    # a simple card observer that prints inserted/removed cards
-    # class PrintObserver( CardObserver ):
-    #     """A simple card observer that is notified
-    #     when cards are inserted/removed from the system and
-    #     prints the list of cards
-    #     """
-    #
-    #     def update(self, observable, actions):
-    #         (addedcards, removedcards) = actions
-    #         for card in addedcards:
-    #             print( "+Inserted: ", toHexString( card.atr ) )
-    #             # user = User.query.filter_by( username='admin' ).first()
-    #             # print(user)
-    #         for card in removedcards:
-    #             print( "-Removed: ", toHexString( card.atr ) )
-
-
-    cardmonitor = CardMonitor()
-    # cardobserver = PrintObserver()
-    # cardmonitor.addObserver( cardobserver )
-
 
     # https://stackoverflow.com/questions/36342718/starting-background-daemon-in-flask-app
     # Test using threading
@@ -158,6 +133,5 @@ def create_app(config_class=DevelopmentConfig):
     csrf_protect.exempt( apicoges_blueprint )
 
     login_manager.init_app(app)
-    socketio.init_app( app )
 
     return app
