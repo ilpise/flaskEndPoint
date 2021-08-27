@@ -25,26 +25,26 @@ def login():
     if current_user.is_authenticated:
         return redirect(url_for('main.member_page'))
 
-
     # form = LoginForm(request.form)
-    if request.method == 'POST':
-        print('POST')
-        print(request.get_json())
+    if request.method == 'GET':
+        print('GET')
+        username = request.args.get( 'username' )
+        # password = request.args.get( 'password' )
 
 
         # user = User.query.filter_by( username=request.form['username'] ).first()
-        user = User.query.filter_by( username='admin' ).first()
+        user = User.query.filter_by( username=username ).first()
         print(user)
 
         if user is None:
             flash('The user is not registered')
-            return redirect(url_for('main.login'))
-
-        login_user(user)
-        logging.info('%s logged in successfully', user.username)
-        # app.logger.info( '%s logged in successfully', user.username )
-        flash('Logged in successfully.')
-        return redirect(url_for('main.member_page'))
+            # return redirect(url_for('main.login'))
+        else :
+            login_user(user)
+            logging.info('%s logged in successfully', user.username)
+            # app.logger.info( '%s logged in successfully', user.username )
+            flash('Logged in successfully.')
+            return redirect(url_for('main.member_page'))
 
     return render_template('auth/login.html', title='Login',
                            # form=form
