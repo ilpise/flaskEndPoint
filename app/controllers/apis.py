@@ -63,7 +63,7 @@ def read():
     client.connect()
     # logging.info( '%s logged in successfully', user.username )
 
-    rr = client.read_holding_registers( 41024, 1, unit=UNIT )
+    rr = client.read_holding_registers( 1125, 1, unit=UNIT )
 
     # # NOTE - the default port for modbus is 502 but the server we implemented run on 5021
     # client = ModbusTcpClient( 'localhost', port=5021 )
@@ -79,27 +79,3 @@ def read():
 
     ret = {"sample return": rr.registers}
     return(jsonify(ret), 200)
-
-
-# TEST login with smartcard reader
-# @api_blueprint.route('/sc_login', methods=['GET'])
-# def sc_login():
-#
-#     user = User.query.filter_by( username='admin' ).first()
-#     print( user )
-#
-#     login_user( user )
-#
-#     return redirect( url_for( 'main.member_page' ) )
-
-# @api_blueprint.route('/api/login', methods=['GET', 'POST'])
-# def login():
-#     # user = load_user(request.values.get('username'))
-#     user = User.query.filter_by( username='admin' ).first()
-#     print('api user: ', user)
-#     if user :
-#         login_user(user)
-#         print( current_user )
-#         return jsonify(status='ok', username=user.username)
-#     else:
-#         return jsonify(status='error', message='wrong username or hash')

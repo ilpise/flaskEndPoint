@@ -4,22 +4,37 @@
 
 
     <div class="card" style="width: 100%;">
-      <div class="card-body">
+      <div class="card-body" style="min-height: 30vh;">
+
         <div class="row">
           <div class="col">
-            <div style="height: 30vh;">
-              <button type="button" class="btn btn-primary btn-lg">Eroga</button>
-
-              <button id="emit" type="button" class="btn btn-primary btn-lg">Emit</button>
-<!--              <button type="button" class="btn btn-primary btn-lg">Eroga</button>-->
-            </div>
+            <p class="text-secondary fs-2">Seleziona la quantità di pellets desiderata</p>
           </div>
         </div>
+
+        <div class="row">
+          <div class="col">
+              <button value="5" type="button" class="btn btn-primary btn-lg" >5Kg</button>
+          </div>
+          <div class="col">
+              <button value="7.5" type="button" class="btn btn-primary btn-lg">7.5Kg</button>
+          </div>
+          <div class="col">
+              <button value="15" type="button" class="btn btn-primary btn-lg">15Kg</button>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <p id="mbresponse" class="text-secondary fs-2"></p>
+          </div>
+        </div>
+
       </div>
     </div>
 
-<script src="{{ url_for('static', filename='js/custom/test_socketio.js') }}"></script>
-
+<!--<script src="{{ url_for('static', filename='js/custom/test_socketio.js') }}"></script>-->
+<script src="{{ url_for('static', filename='js/custom/modbus.js') }}"></script>
 {% endblock %}
 
 
