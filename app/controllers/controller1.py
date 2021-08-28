@@ -19,6 +19,15 @@ import array
 # When using a Flask app factory we must use a blueprint to avoid needing 'app' for '@app.route'
 main_blueprint = Blueprint('main', __name__, template_folder='templates')
 
+@main_blueprint.route("/splash_screen", methods=['GET'])
+def splash_screen():
+    print('login screen : ' , current_user)
+    if current_user.is_authenticated:
+        return redirect(url_for('main.member_page'))
+
+    return render_template('views/controller1/splash.html',
+                           title='Welcome')
+
 
 @main_blueprint.route("/login", methods=['GET', 'POST'])
 def login():
@@ -47,7 +56,6 @@ def login():
                 print('Manager')
             if user.has_role('operator'):
                 print('Operatore')
-
             if user.has_role('customer'):
                 print('CUstomer')
 
@@ -57,35 +65,14 @@ def login():
             flash('Logged in successfully.')
             return redirect(url_for('main.member_page'))
 
-    return render_template('auth/login.html', title='Login',
-                           # form=form
+    return render_template('auth/login.html',
+                           title='Login'
                            )
-
-# @main_blueprint.route('/login', methods=['GET', 'POST'])
-# def login():
-#     # user = load_user(request.values.get('username'))
-#     user = User.query.filter_by( username='admin' ).first()
-#     print('api user: ', user)
-#     if user :
-#         login_user(user)
-#         print( current_user )
-#         return jsonify(status='ok', username=user.username)
-#     else:
-#         return jsonify(status='error', message='wrong username or hash')
-#
-# @main_blueprint.route("/login_screen", methods=['GET'])
-# def login_screen():
-#     print('login screen : ' , current_user)
-#     if current_user.is_authenticated:
-#         return redirect(url_for('main.member_page'))
-#
-#     return render_template('auth/login.html', title='Login')
-
 
 @main_blueprint.route('/logout')
 def logout():
     logout_user()
-    return redirect(url_for('main.login'))
+    return redirect(url_for('main.splash_screen'))
     # return redirect( url_for( 'main.login_screen' ) )
 
 # The User page is accessible to authenticated users (users that have logged in)

@@ -86,9 +86,14 @@ def checkpin():
     # print(request.get_json())
     json = request.get_json()
 
+    # TODO - Deprecation warning: verify_password(password, user) has been changed to
+    #  : verify_password(password, password_hash).
+    #  The user param will be deprecated.
+    #  Please change your call with verify_password(password, user) into a call with
+    #  verify_password(password, user.password) as soon as possible.
+
     if (current_app.user_manager.verify_password( json["pin"], current_user )):
         ret = {"response": "OK"}
-
     else:
         ret = {"response": "KO"}
 

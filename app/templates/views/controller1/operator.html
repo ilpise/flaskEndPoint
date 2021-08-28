@@ -6,6 +6,7 @@
     <div class="card" style="width: 100%;">
       <div class="card-body" style="min-height: 30vh;">
 
+        <div id="step1">
         <div class="row">
           <div class="col">
             <p class="text-secondary fs-2">Ciao {{ user_name }} inserisci il tuo pin</p>
@@ -47,10 +48,53 @@
             <p id="mbresponse" class="text-secondary fs-2"></p>
           </div>
         </div>
+        </div>
+
+        <div id="step2" style="display:none;">
+            <div class="row mb-5">
+              <div class="col">
+                  <button id="s2_carico" type="button" class="btn btn-primary btn-lg" >Carico Prodotto</button>
+              </div>
+              <div class="col">
+                  <button value="7.5" type="button" class="btn btn-primary btn-lg">Blocco Macchina</button>
+              </div>
+              <div class="col">
+                  <button value="15" type="button" class="btn btn-primary btn-lg">Verifica Componenti</button>
+              </div>
+            </div>
+            <div class="row mb-5">
+              <div class="col">
+                  <button value="5" type="button" class="btn btn-primary btn-lg" >Apertura Cassa</button>
+              </div>
+              <div class="col">
+                  <button value="7.5" type="button" class="btn btn-primary btn-lg">Gestione Prodotti</button>
+              </div>
+              <div class="col">
+                  <button value="15" type="button" class="btn btn-primary btn-lg">Gestione Alert</button>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                  <button value="5" type="button" class="btn btn-primary btn-lg" >Procedi come utente</button>
+              </div>
+            </div>
+
+        </div>
+
+        <div id="s_cs" style="display:none;">
+            <div class="row mb-5">
+              <div class="col">
+                  <button id="s_cs_carico" type="button" class="btn btn-primary btn-lg">Avvia Carico</button>
+              </div>
+              <div class="col">
+                  <button id="s_cs_blocco" type="button" class="btn btn-primary btn-lg">Blocco Carico</button>
+              </div>
+            </div>
+        </div>
+
 
       </div>
     </div>
 
-<!--<script src="{{ url_for('static', filename='js/custom/test_socketio.js') }}"></script>-->
-<script src="{{ url_for('static', filename='js/custom/checkpin.js') }}"></script>
+<script src="{{ url_for('static', filename='js/custom/operator.js') }}"></script>
 {% endblock %}

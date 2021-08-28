@@ -1,0 +1,51 @@
+{% extends "common/page_base.html" %}
+
+{% block content %}
+
+
+    <div class="card" style="width: 100%;">
+      <div class="card-body" style="min-height: 30vh;">
+
+        <div id="splash">
+            <div class="row mb-5">
+              <div class="col">
+                  <img src="{{url_for('static', filename='img/Logo.png')}}">
+              </div>
+            </div>
+            <div class="row mb-5">
+              <div class="col">
+                  <button id="entra" type="button" class="btn btn-primary btn-lg">Entra</button>
+              </div>
+            </div>
+        </div>
+
+        <div id="paper" style="display:none;">
+          <div class="row">
+            <div class="col">
+              <p class="text-secondary fs-2">Non è disponibile l'erogazione della ricevuta</p>
+              <p class="text-secondary fs-2">Si vuole continuare lo steso con le operazioni?</p>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+                <button value="5" type="button" class="btn btn-primary btn-lg" >SI</button>
+            </div>
+            <div class="col">
+                <button value="7.5" type="button" class="btn btn-primary btn-lg">NO</button>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <p id="mbresponse" class="text-secondary fs-2"></p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+<!--<script src="{{ url_for('static', filename='js/custom/test_socketio.js') }}"></script>-->
+<!--<script src="{{ url_for('static', filename='js/custom/modbus.js') }}"></script>-->
+{% endblock %}
