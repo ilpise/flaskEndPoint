@@ -2,8 +2,8 @@
 
 from flask import Blueprint, redirect, render_template
 from flask import request, url_for, flash, jsonify
-from flask_login import login_user, current_user, logout_user
-
+from flask_login import login_user, logout_user
+from flask_user import current_user
 import logging
 
 from app.models.user_models import User
@@ -93,7 +93,7 @@ def logout():
                       # methods=['GET', 'POST']
                       )
 def member_page():
-    print(current_user)
+    # print(current_user)
     if not current_user.is_authenticated:
         return redirect(url_for('main.login'))
         # return redirect( url_for( 'main.login_screen' ) )
