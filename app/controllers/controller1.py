@@ -28,18 +28,29 @@ def login():
     # form = LoginForm(request.form)
     if request.method == 'GET':
         print('GET')
+
+        # The username or C.F. is passed from the SC reader
         username = request.args.get( 'username' )
-        # password = request.args.get( 'password' )
-
-
         # user = User.query.filter_by( username=request.form['username'] ).first()
         user = User.query.filter_by( username=username ).first()
-        print(user)
 
         if user is None:
-            flash('The user is not registered')
-            # return redirect(url_for('main.login'))
+            # The user is not registered
+            print('NONE')
+            # TODO Register the user
         else :
+            user_roles_names = [role.name for role in user.roles]
+            print( user_roles_names )
+            if user.has_role('admin'):
+                print('Admin')
+            if user.has_role('manager'):
+                print('Manager')
+            if user.has_role('operator'):
+                print('Operatore')
+
+            if user.has_role('customer'):
+                print('CUstomer')
+
             login_user(user)
             logging.info('%s logged in successfully', user.username)
             # app.logger.info( '%s logged in successfully', user.username )
@@ -86,6 +97,10 @@ def member_page():
     if not current_user.is_authenticated:
         return redirect(url_for('main.login'))
         # return redirect( url_for( 'main.login_screen' ) )
+
+    if current_user.has_role('operator'):
+        return render_template('views/controller1/operator.html',
+                               user_name=current_user.username)
 
     return render_template('views/controller1/member_base.html')
 
