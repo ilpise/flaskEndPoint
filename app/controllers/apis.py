@@ -2,7 +2,7 @@
 
 import logging
 import asyncio
-from flask import Blueprint, jsonify, current_app
+from flask import Blueprint, jsonify, current_app, request
 # from flask_login import current_user
 # import bcrypt
 from flask_user import current_user, UserManager
@@ -81,11 +81,15 @@ def read():
 
 
 # Check the pin inserted by the operator
-@api_blueprint.route('/operator/checkpin', methods=['GET'])
+@api_blueprint.route('/operator/checkpin', methods=['POST'])
 def checkpin():
+    # print(request.get_json())
+    json = request.get_json()
 
-    if (current_app.user_manager.verify_password( '1234', current_user )):
-        print('VALID USER')
+    if (current_app.user_manager.verify_password( json["pin"], current_user )):
+        ret = {"response": "OK"}
 
-    ret = {"response": "valid"}
+    else:
+        ret = {"response": "KO"}
+
     return(jsonify(ret), 200)

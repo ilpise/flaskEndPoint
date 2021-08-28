@@ -8,17 +8,23 @@
     $('#checkPin').click(function(event) {
         console.log('PING')
         console.log($('#pin').val())
+        var pin = $('#pin').val();
 
         $.ajax({
-          url : "/operator/checkpin",
-          type : "GET",
-          success: readModbusResponse,
+              url : "/operator/checkpin",
+              type : "POST",
+              contentType: "application/json",
+              data : JSON.stringify({'pin': pin }),
+              success: verifyCheckpin,
         });
 
-        function readModbusResponse (data, textStatus, jqXHR) {
+        function verifyCheckpin (data, textStatus, jqXHR) {
             console.log(data)
-//            $('#mbresponse').html(data.response);
-            $('#mbresponse').html(data.response);
+            if(data.response == 'OK'){
+                $('#mbresponse').html('Valid PIN');
+            } else {
+                $('#mbresponse').html('The PIN you entered is invalid');
+            }
         };
 
         return false;
