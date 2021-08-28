@@ -14,10 +14,14 @@ class DevelopmentConfig(ProductionConfig):
     CSRF_ENABLED = True
 
     # Flask-SQLAlchemy settings
-
     SQLALCHEMY_DATABASE_URI = 'sqlite:///quickstart_app.sqlite'  # File-based SQL database
     SQLALCHEMY_TRACK_MODIFICATIONS = False  # Avoids SQLAlchemy warning
     SESSION_TYPE = 'sqlalchemy'
+
+    # Flask-User
+    USER_PASSLIB_CRYPTCONTEXT_SCHEMES = ['bcrypt']
+    USER_EMAIL_SENDER_EMAIL = 'thisPi@gmail.com'
+
 
     # OPENPLC
     # OPENPLC_IP = '172.17.0.4'

@@ -18,6 +18,7 @@ setup(
         'Flask-Login',
         'Flask-User',
         'Flask-WTF',
+        'email_validator',
         #'flask-socketio',
         #'flaskwebgui',
         'requests',
