@@ -11,12 +11,13 @@ from pymodbus.client.asynchronous.tcp import AsyncModbusTCPClient as ModbusClien
 
 from pymodbus.client.asynchronous import schedulers
 from flask import Flask
-from flask_socketio import SocketIO
+# from flask_socketio import SocketIO
 from flask_migrate import Migrate
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
 from flask_session import Session
 from flask_login import LoginManager
+from flask_user import UserManager
 from config import DevelopmentConfig
 
 
@@ -133,5 +134,9 @@ def create_app(config_class=DevelopmentConfig):
     csrf_protect.exempt( apicoges_blueprint )
 
     login_manager.init_app(app)
+
+    # Flask-User integration
+    from .models.user_models import User
+    user_manager = UserManager( app, db, User )
 
     return app
