@@ -3,6 +3,12 @@
 import logging
 import asyncio
 from flask import Blueprint, jsonify, current_app
+# from flask_login import current_user
+# import bcrypt
+from flask_user import current_user, UserManager
+# from app import user_manager
+# from ..models.user_models import User
+# from app import db, UserManager
 
 from pymodbus.client.asynchronous.tcp import AsyncModbusTCPClient as ModbusClient
 from pymodbus.client.asynchronous import schedulers
@@ -58,24 +64,28 @@ def sample_page():
 def read():
     OpenplcIp = current_app.config["OPENPLC_IP"]
     ModbusPort = current_app.config["OPENPLC_MODBUS_PORT"]
-    # NOTE - the default port for modbus is 502 but the server we implemented run on 5021
+
+    # NOTE - the default port for modbus is 502
     client = ModbusTcpClient( OpenplcIp, port=ModbusPort )
     client.connect()
-    # logging.info( '%s logged in successfully', user.username )
 
     rr = client.read_holding_registers( 1125, 1, unit=UNIT )
-
-    # # NOTE - the default port for modbus is 502 but the server we implemented run on 5021
-    # client = ModbusTcpClient( 'localhost', port=5021 )
-    # client.connect()
-    # # logging.info( '%s logged in successfully', user.username )
-    # rr = client.read_holding_registers( 0, 8, unit=UNIT )
-
 
     assert (not rr.isError())
     print(rr)
     print(rr.registers)
     # logging.info( '%s logged in successfully', user.username )
 
-    ret = {"sample return": rr.registers}
+    ret = {"response": rr.registers}
+    return(jsonify(ret), 200)
+
+
+# Check the pin inserted by the operator
+@api_blueprint.route('/operator/checkpin', methods=['GET'])
+def checkpin():
+
+    if (current_app.user_manager.verify_password( '1234', current_user )):
+        print('VALID USER')
+
+    ret = {"response": "valid"}
     return(jsonify(ret), 200)
