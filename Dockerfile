@@ -3,7 +3,7 @@ FROM arm32v7/python:3.7-buster
 ADD . /flaskEndPoint
 
 RUN apt-get update
-# Add packages to use pyscard to read Smart Cards
+# Add packages
 RUN apt-get -y install python3.7-dev
 
 # Change to flask app directory and run install

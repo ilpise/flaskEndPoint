@@ -14,7 +14,7 @@ class DevelopmentConfig(ProductionConfig):
     CSRF_ENABLED = True
 
     # Flask-SQLAlchemy settings
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///quickstart_app.sqlite'  # File-based SQL database
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///db/fep.sqlite'  # File-based SQL database
     SQLALCHEMY_TRACK_MODIFICATIONS = False  # Avoids SQLAlchemy warning
     SESSION_TYPE = 'sqlalchemy'
 
@@ -25,7 +25,7 @@ class DevelopmentConfig(ProductionConfig):
 
     # OPENPLC
     # OPENPLC_IP = '172.17.0.4'
-    OPENPLC_IP = '172.17.0.3'
+    OPENPLC_IP = '172.20.0.3'
     OPENPLC_MODBUS_PORT = 502
 
 
