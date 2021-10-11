@@ -1,6 +1,23 @@
-version: "3.9"
+version: "3.1"
+
+volumes:
+  openplc-data:
+  sqlite-db:
+
 services:
-  web:
-    build: .
+
+  flaskendpoint:
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile
     ports:
-      - "5000:5000"
+      - 5000:5000
+    volumes:
+      - sqlite-db:
+
+  openplc:
+    build: https://github.com/thiagoralves/OpenPLC_v3
+    privileged: true
+    ports:
+      - 8080:8080
