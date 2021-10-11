@@ -29,22 +29,37 @@ class User(db.Model, UserMixin):
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     # The active flag is 1 for DEFAULT this way the user is created active
-    active = db.Column('is_active', db.Boolean(), nullable=False, server_default='1')
+    active = db.Column('status', db.Boolean(), nullable=False, server_default='1')
 
     # User authentication information. The collation='NOCASE' is required
     # to search case insensitively when USER_IFIND_MODE is 'nocase_collation'.
     username = db.Column( db.String( 100, collation='NOCASE' ), nullable=False, unique=True )
     password = db.Column( db.String( 255 ), nullable=False, server_default='' )
-    email = db.Column( db.String( 255 ), nullable=False, unique=True )
-    email_confirmed_at = db.Column( db.DateTime() )
+    email = db.Column( db.String( 255 ), nullable=True, unique=True )
 
     # User information
     first_name = db.Column( db.String( 100, collation='NOCASE' ), nullable=False, server_default='' )
     last_name = db.Column( db.String( 100, collation='NOCASE' ), nullable=False, server_default='' )
 
+    # Operator
+    pin = db.Column(db.String(255), nullable=False, server_default='')
+
+    # Customer
+    credit = db.Column(db.Float(2), nullable=False, server_default='')
+
     # Relationships
     roles = db.relationship('Role', secondary='users_roles',
                             backref=db.backref('users', lazy='dynamic'))
+
+    vendors = db.relationship( 'Vendor', secondary='users_vendors',
+                             backref=db.backref( 'users', lazy='dynamic' ) )
+
+    def has_vendor(self, vendor):
+        for item in self.vendors:
+            if item.name == vendor:
+                return True
+        return False
+
     def has_role(self, role):
         for item in self.roles:
             if item.name == role:
@@ -75,6 +90,11 @@ class Role(db.Model):
     name = db.Column(db.String(50), nullable=False, server_default=u'', unique=True)  # for @roles_accepted()
     label = db.Column(db.Unicode(255), server_default=u'')  # for display purposes
 
+# Define the Vendor data model
+class Vendor(db.Model):
+    __tablename__ = 'vendors'
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(50), nullable=False, server_default=u'', unique=True)
 
 class Session(db.Model):
     __tablename__ = 'sessions'
@@ -92,6 +112,12 @@ class UsersRoles(db.Model):
     user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
     role_id = db.Column(db.Integer(), db.ForeignKey('roles.id', ondelete='CASCADE'))
 
+# Define the UserVendors association model
+class UsersVendors(db.Model):
+    __tablename__ = 'users_vendors'
+    id = db.Column(db.Integer(), primary_key=True)
+    user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
+    vendor_id = db.Column(db.Integer(), db.ForeignKey('vendors.id', ondelete='CASCADE'))
 
 # Define the User registration form
 # It augments the Flask-User RegisterForm with additional fields
