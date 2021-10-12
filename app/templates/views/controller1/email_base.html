@@ -25,14 +25,16 @@
                       {% endif %}
                   {%- endwith %}
               {% endblock %}
-                <h1>Login</h1>
+                <h1>E-mail</h1>
                 <p class="text-muted">Se vuoi inserisci una mail per accedere al portale online e verficare il tuo credito residuo</p>
+                <p class="text-muted">Ulteriori informazioni verranno spedite all'indirizzo e-mail</p>
+                <p class="text-muted">Questa operazione non è obbligatoria, potrai inserire la tua mail in un altro momento</p>
                 <div class="input-group mb-3">
                         <div class="col-12 form-group">
-                            <input type="text" name="code" class="form-control input-lg">
+                            <input type="email" name="email" class="form-control input-lg">
                         </div>
 
-                        <div class="softkeys" data-target="input[name='code']"></div>
+                        <div class="softkeys" data-target="input[name='email']"></div>
                 </div>
                 <div class="row">
                   <div class="col-12">

@@ -110,13 +110,18 @@ def member_page():
     return render_template('views/controller1/member_base.html')
 
 # The User page is accessible to authenticated users (users that have logged in)
-@main_blueprint.route('/insert_mail')
+@main_blueprint.route('/insert_mail',  methods=['GET', 'POST'])
 def mail_page():
     print('CURRENT USER')
     print(current_user)
     if not current_user.is_authenticated:
         return redirect(url_for('main.login'))
-        # return redirect( url_for( 'main.login_screen' ) )
+
+    if request.method == 'POST':
+        email = request.form['email']
+        current_user.email = email
+        db.session.commit()
+        return redirect( url_for( 'main.member_page' ) )
 
     return render_template('views/controller1/email_base.html')
 
