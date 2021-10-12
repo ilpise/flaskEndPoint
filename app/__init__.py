@@ -126,6 +126,22 @@ def create_app(config_class=DevelopmentConfig):
     # Setup mqtt client
     mqtt.init_app( app )
 
+    # # Set default subscriptions
+    # @mqtt.on_connect()
+    # def handle_connect(client, userdata, flags, rc):
+    #     mqtt.subscribe('vendors/create_update')
+    #
+    # @mqtt.on_message()
+    # def handle_mqtt_message(client, userdata, message):
+    #     data = dict(
+    #         topic=message.topic,
+    #         payload=message.payload.decode()
+    #     )
+    #     print( data )
+
+    from app.controllers.mqtt import handle_connect
+    from app.controllers.mqtt import handle_mqtt_message
+
     from app.controllers.controller1 import main_blueprint
     from app.controllers.apis import api_blueprint
     from app.controllers.apicoges import apicoges_blueprint
