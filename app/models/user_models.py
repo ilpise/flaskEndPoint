@@ -1,7 +1,7 @@
 # Copyright 2021 Simone Corti . All rights reserved
 
-# from flask_login import UserMixin, login_manager
-from flask_user import UserMixin
+from flask_login import UserMixin, login_manager
+# from flask_user import UserMixin
 # from flask_user.forms import RegisterForm
 from flask_wtf import FlaskForm
 # from werkzeug.security import check_password_hash
@@ -11,8 +11,14 @@ from dataclasses import dataclass
 
 @login_manager.user_loader
 def load_user(user_id):
+    print('user_models.py')
     print(user_id)
     return User.query.filter_by(id=user_id).first()
+# @login_manager.user_loader
+# def load_user(user_name):
+#     print('user_models.py')
+#     print(user_name)
+#     return User.query.filter_by(name=user_name).first()
 
 # Define the User data model. Make sure to add the flask_user.UserMixin !!
 @dataclass

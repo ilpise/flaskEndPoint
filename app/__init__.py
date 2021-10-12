@@ -17,14 +17,16 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_wtf.csrf import CSRFProtect
 from flask_session import Session
 from flask_login import LoginManager
-from flask_user import UserManager
+# from flask_user import UserManager
 from config import DevelopmentConfig
+from flask_mqtt import Mqtt
 
 # Instantiate Flask extensions
 db = SQLAlchemy()
 login_manager = LoginManager()
 csrf_protect = CSRFProtect()
 migrate = Migrate()
+mqtt = Mqtt()
 
 UNIT = 0x1
 
@@ -121,6 +123,8 @@ def create_app(config_class=DevelopmentConfig):
     Session( app )
     # Setup WTForms CSRFProtect
     csrf_protect.init_app( app )
+    # Setup mqtt client
+    mqtt.init_app( app )
 
     from app.controllers.controller1 import main_blueprint
     from app.controllers.apis import api_blueprint
@@ -137,7 +141,7 @@ def create_app(config_class=DevelopmentConfig):
     login_manager.init_app( app )
 
     # Flask-User integration
-    from .models.user_models import User
-    user_manager = UserManager( app, db, User )
+    # from .models.user_models import User
+    # user_manager = UserManager( app, db, User )
 
     return app
