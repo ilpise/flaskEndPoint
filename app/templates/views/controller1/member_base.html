@@ -8,7 +8,13 @@
 
         <div class="row">
           <div class="col">
-            <p class="text-secondary fs-2">Seleziona la quantità di pellets desiderata</p>
+            <div id="credit" class="text-muted"></div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col">
+            <p class="text-muted">Seleziona la quantità di pellets desiderata</p>
           </div>
         </div>
 
@@ -33,7 +39,11 @@
       </div>
     </div>
 
-<!--<script src="{{ url_for('static', filename='js/custom/test_socketio.js') }}"></script>-->
+<!-- Coges comunication -->
+<script src="{{ url_for('static', filename='js/custom/coges_daemon.js') }}"></script>
+<!--<script src="{{ url_for('static', filename='js/custom/testcoges.js') }}"></script>-->
+
+<!-- Openplc comunication -->
 <script src="{{ url_for('static', filename='js/custom/modbus.js') }}"></script>
 {% endblock %}
 
