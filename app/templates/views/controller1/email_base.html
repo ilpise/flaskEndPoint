@@ -1,0 +1,56 @@
+{% extends "common/page_base.html" %}
+
+{% block content %}
+
+
+  <div class="row justify-content-center">
+    <div class="col-md-12">
+      <div class="card-group">
+        <div class="card p-4">
+          <div class="card-body">
+            <form action="" method="POST" class="form" role="form">
+              <input id="next" name="next" type="hidden" value="/">
+              <input id="reg_next" name="reg_next" type="hidden" value="/">
+                {# {{ form.hidden_tag() }} #}
+              {# One-time system messages called Flash messages #}
+              {% block flash_messages %}
+                  {%- with messages = get_flashed_messages(with_categories=true) -%}
+                      {% if messages %}
+                          {% for category, message in messages %}
+                              {% if category=='error' %}
+                                  {% set category='danger' %}
+                              {% endif %}
+                              <p><font color="red">{{ message|safe }}</font></p>
+                          {% endfor %}
+                      {% endif %}
+                  {%- endwith %}
+              {% endblock %}
+                <h1>Login</h1>
+                <p class="text-muted">Se vuoi inserisci una mail per accedere al portale online e verficare il tuo credito residuo</p>
+                <div class="input-group mb-3">
+                        <div class="col-12 form-group">
+                            <input type="text" name="code" class="form-control input-lg">
+                        </div>
+
+                        <div class="softkeys" data-target="input[name='code']"></div>
+                </div>
+                <div class="row">
+                  <div class="col-12">
+                    <input type="submit" class="btn btn-primary active" value="Continua">
+<!--                                    <button id="emit" type="button" class="btn btn-primary btn-lg">Emit</button>-->
+<!--                                    <button id="ping" type="button" class="btn btn-primary btn-lg">Ping</button>-->
+
+                  </div>
+                </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script src="{{ url_for('static', filename='js/softkeys-0.0.1.js') }}"></script>
+<link rel="stylesheet" href="{{ url_for('static', filename='css/softkeys-0.0.1.css') }}">
+<script src="{{ url_for('static', filename='js/custom/email.js') }}"></script>
+
+{% endblock %}
