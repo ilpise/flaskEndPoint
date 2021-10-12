@@ -8,7 +8,7 @@ Per effetuare l'installazione del database
 3. flask db migrate
 
 Per effettuare il seed del database
-
+https://stackoverflow.com/questions/19334604/creating-seed-data-in-a-flask-migrate-or-alembic-migration
 Ho modificato il file nella cartella migrations/versions ed ho aggiunto l'inserimento delle roles utilizzando op.bulk_insert
 
 Per effettuare l'inserimento delle roles -> far girare le op.bulk_insert devi lanciare
