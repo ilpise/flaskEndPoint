@@ -51,8 +51,9 @@ def login():
             role = Role.query.filter( Role.name == str( 'customer' ) ).first()
             # Create the user - without mail
             user = User( username=username,
-                            password = 'plaintextpassword',
-                            active=True )
+                         password='plaintextpassword',
+                         active=True,
+                         credit=0)
             if role:
                 user.roles.append( role )
             db.session.add( user )
@@ -94,9 +95,7 @@ def logout():
     # return redirect( url_for( 'main.login_screen' ) )
 
 # The User page is accessible to authenticated users (users that have logged in)
-@main_blueprint.route('/',
-                      # methods=['GET', 'POST']
-                      )
+@main_blueprint.route('/')
 def member_page():
     # print(current_user)
     if not current_user.is_authenticated:
@@ -107,7 +106,8 @@ def member_page():
         return render_template('views/controller1/operator.html',
                                user_name=current_user.username)
 
-    return render_template('views/controller1/member_base.html')
+    return render_template('views/controller1/member_base.html',
+                           credit_residuo=current_user.credit)
 
 # The User page is accessible to authenticated users (users that have logged in)
 @main_blueprint.route('/insert_mail',  methods=['GET', 'POST'])

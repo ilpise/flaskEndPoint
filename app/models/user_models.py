@@ -51,7 +51,7 @@ class User(db.Model, UserMixin):
     pin = db.Column(db.String(255), nullable=False, server_default='')
 
     # Customer
-    credit = db.Column(db.Float(2), nullable=False, server_default='')
+    credit = db.Column(db.Float(2), nullable=False, server_default=u'0.00')
 
     # Relationships
     roles = db.relationship('Role', secondary='users_roles',
