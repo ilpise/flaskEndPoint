@@ -119,8 +119,10 @@ def mail_page():
 
     if request.method == 'POST':
         email = request.form['email']
-        current_user.email = email
-        db.session.commit()
+        if email:
+            current_user.email = email
+            db.session.commit()
+
         return redirect( url_for( 'main.member_page' ) )
 
     return render_template('views/controller1/email_base.html')
