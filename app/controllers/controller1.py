@@ -6,7 +6,8 @@ from flask_login import login_user, logout_user
 from flask_user import current_user
 import logging
 
-from app.models.user_models import User
+from app import db
+from app.models.user_models import User, Role
 
 import array
 
@@ -38,15 +39,29 @@ def login():
     if request.method == 'GET':
         print('GET')
 
-        # The username or C.F. is passed from the SC reader
+        # The username or C.F. is passed from the optic reader
         username = request.args.get( 'username' )
-        # user = User.query.filter_by( username=request.form['username'] ).first()
         user = User.query.filter_by( username=username ).first()
 
         if user is None:
             # The user is not registered
             print('NONE')
             # TODO Register the user
+            # Get the customer role
+            role = Role.query.filter( Role.name == str( 'customer' ) ).first()
+            # Create the user - without mail
+            user = User( username=username,
+                            password = 'plaintextpassword',
+                            active=True )
+            if role:
+                user.roles.append( role )
+            db.session.add( user )
+            db.session.commit()
+
+            # Authenticate the user
+            login_user( user )
+            # Redirect to insert mail page
+            return redirect( url_for( 'main.mail_page' ) )
         else :
             user_roles_names = [role.name for role in user.roles]
             print( user_roles_names )
@@ -68,6 +83,9 @@ def login():
     return render_template('auth/login.html',
                            title='Login'
                            )
+    # return render_template('views/controller1/email_base.html',
+    #                        title='Login'
+    #                        )
 
 @main_blueprint.route('/logout')
 def logout():
@@ -90,6 +108,17 @@ def member_page():
                                user_name=current_user.username)
 
     return render_template('views/controller1/member_base.html')
+
+# The User page is accessible to authenticated users (users that have logged in)
+@main_blueprint.route('/insert_mail')
+def mail_page():
+    print('CURRENT USER')
+    print(current_user)
+    if not current_user.is_authenticated:
+        return redirect(url_for('main.login'))
+        # return redirect( url_for( 'main.login_screen' ) )
+
+    return render_template('views/controller1/email_base.html')
 
 @main_blueprint.route('/coges')
 def coges():
