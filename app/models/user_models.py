@@ -34,6 +34,7 @@ class User(db.Model, UserMixin):
 
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
+    uid = db.Column( db.Integer, nullable=False, unique=True )
     # The active flag is 1 for DEFAULT this way the user is created active
     active = db.Column('status', db.Boolean(), nullable=False, server_default='1')
 
