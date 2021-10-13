@@ -7,7 +7,7 @@ from flask_user import current_user
 import logging
 
 from app import db
-from app.models.user_models import User, Role
+from app.models.user_models import User, Role, Vendor, UsersVendors
 
 import array
 
@@ -46,17 +46,24 @@ def login():
         if user is None:
             # The user is not registered
             print('NONE')
-            # TODO Register the user
+            # Register the user
             # Get the customer role
             role = Role.query.filter( Role.name == str( 'customer' ) ).first()
+            # Get the vendor
+            vendor = Vendor.query.filter(Vendor.id == 1).first()
             # Create the user - without mail
             user = User( username=username,
                          password='plaintextpassword',
-                         active=True,
-                         credit=0)
+                         active=True)
             if role:
                 user.roles.append( role )
+
             db.session.add( user )
+
+            if vendor:
+                asso = UsersVendors(user=user, vendor=vendor, credit=0 )
+                db.session.add(asso)
+
             db.session.commit()
 
             # Authenticate the user
@@ -64,16 +71,16 @@ def login():
             # Redirect to insert mail page
             return redirect( url_for( 'main.mail_page' ) )
         else :
-            user_roles_names = [role.name for role in user.roles]
-            print( user_roles_names )
-            if user.has_role('admin'):
-                print('Admin')
-            if user.has_role('manager'):
-                print('Manager')
-            if user.has_role('operator'):
-                print('Operatore')
-            if user.has_role('customer'):
-                print('CUstomer')
+            # user_roles_names = [role.name for role in user.roles]
+            # print( user_roles_names )
+            # if user.has_role('admin'):
+            #     print('Admin')
+            # if user.has_role('manager'):
+            #     print('Manager')
+            # if user.has_role('operator'):
+            #     print('Operatore')
+            # if user.has_role('customer'):
+            #     print('CUstomer')
 
             login_user(user)
             logging.info('%s logged in successfully', user.username)
@@ -106,8 +113,10 @@ def member_page():
         return render_template('views/controller1/operator.html',
                                user_name=current_user.username)
 
+    association = UsersVendors.query.filter_by(user_id=current_user.id, vendor_id=1).first()
     return render_template('views/controller1/member_base.html',
-                           credit_residuo=current_user.credit)
+                           credit_residuo=association.credit
+                           )
 
 # The User page is accessible to authenticated users (users that have logged in)
 @main_blueprint.route('/insert_mail',  methods=['GET', 'POST'])

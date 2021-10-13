@@ -54,8 +54,8 @@ class User(db.Model, UserMixin):
     roles = db.relationship('Role', secondary='users_roles',
                             backref=db.backref('users', lazy='dynamic'))
 
-    vendors = db.relationship( 'Vendor', secondary='users_vendors',
-                             backref=db.backref( 'users', lazy='dynamic' ) )
+    # vendors = db.relationship( 'Vendor', secondary='users_vendors',
+    #                          backref=db.backref( 'users', lazy='dynamic' ) )
 
     def has_vendor(self, vendor):
         for item in self.vendors:
@@ -123,6 +123,9 @@ class UsersVendors(db.Model):
     vendor_id = db.Column(db.Integer(), db.ForeignKey('vendors.id', ondelete='CASCADE'))
     # Customer
     credit = db.Column(db.Float(2), nullable=False, server_default=u'0.00')
+
+    user = db.relationship( 'User', backref=db.backref( 'users' ) )
+    vendor = db.relationship( 'Vendor', backref=db.backref( 'vendors' ) )
 
 # Define the User registration form
 # It augments the Flask-User RegisterForm with additional fields
