@@ -91,7 +91,7 @@ class Role(db.Model):
 class Vendor(db.Model):
     __tablename__ = 'vendors'
     id = db.Column(db.Integer(), primary_key=True)
-    name = db.Column(db.String(50), nullable=False, server_default=u'', unique=True)
+    title = db.Column(db.String(50), nullable=False, server_default=u'', unique=True)
 
 class Session(db.Model):
     __tablename__ = 'sessions'
