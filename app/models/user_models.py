@@ -50,9 +50,6 @@ class User(db.Model, UserMixin):
     # Operator
     pin = db.Column(db.String(255), nullable=False, server_default='')
 
-    # Customer
-    credit = db.Column(db.Float(2), nullable=False, server_default=u'0.00')
-
     # Relationships
     roles = db.relationship('Role', secondary='users_roles',
                             backref=db.backref('users', lazy='dynamic'))
@@ -124,6 +121,8 @@ class UsersVendors(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
     vendor_id = db.Column(db.Integer(), db.ForeignKey('vendors.id', ondelete='CASCADE'))
+    # Customer
+    credit = db.Column(db.Float(2), nullable=False, server_default=u'0.00')
 
 # Define the User registration form
 # It augments the Flask-User RegisterForm with additional fields
