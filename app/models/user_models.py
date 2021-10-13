@@ -50,18 +50,12 @@ class User(db.Model, UserMixin):
     # Operator
     pin = db.Column(db.String(255), nullable=False, server_default='')
 
+    # Customer
+    credit = db.Column(db.Float(2), nullable=False, server_default=u'0.00')
+
     # Relationships
     roles = db.relationship('Role', secondary='users_roles',
                             backref=db.backref('users', lazy='dynamic'))
-
-    # vendors = db.relationship( 'Vendor', secondary='users_vendors',
-    #                          backref=db.backref( 'users', lazy='dynamic' ) )
-
-    def has_vendor(self, vendor):
-        for item in self.vendors:
-            if item.name == vendor:
-                return True
-        return False
 
     def has_role(self, role):
         for item in self.roles:
@@ -114,18 +108,6 @@ class UsersRoles(db.Model):
     id = db.Column(db.Integer(), primary_key=True)
     user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
     role_id = db.Column(db.Integer(), db.ForeignKey('roles.id', ondelete='CASCADE'))
-
-# Define the UserVendors association model
-class UsersVendors(db.Model):
-    __tablename__ = 'users_vendors'
-    id = db.Column(db.Integer(), primary_key=True)
-    user_id = db.Column(db.Integer(), db.ForeignKey('users.id', ondelete='CASCADE'))
-    vendor_id = db.Column(db.Integer(), db.ForeignKey('vendors.id', ondelete='CASCADE'))
-    # Customer
-    credit = db.Column(db.Float(2), nullable=False, server_default=u'0.00')
-
-    user = db.relationship( 'User', backref=db.backref( 'users' ) )
-    vendor = db.relationship( 'Vendor', backref=db.backref( 'vendors' ) )
 
 # Define the User registration form
 # It augments the Flask-User RegisterForm with additional fields
