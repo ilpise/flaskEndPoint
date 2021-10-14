@@ -6,8 +6,8 @@ class ProductionConfig(object):
 
 
 class DevelopmentConfig(ProductionConfig):
-    DEBUG = True
-    # DEBUG = False
+    # DEBUG = True
+    DEBUG = False
     TESTING = False
 
     # Flask settings
