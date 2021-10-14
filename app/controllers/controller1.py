@@ -1,4 +1,5 @@
 # Copyright 2021 Simone Corti. All rights reserved
+import json
 
 from flask import Blueprint, redirect, render_template
 from flask import request, url_for, flash, jsonify
@@ -6,7 +7,7 @@ from flask_login import login_user, logout_user
 from flask_user import current_user
 import logging
 
-from app import db
+from app import db, mqtt
 from app.models.user_models import User, Role
 
 import array
@@ -97,7 +98,19 @@ def logout():
 # The User page is accessible to authenticated users (users that have logged in)
 @main_blueprint.route('/')
 def member_page():
-    # print(current_user)
+    print('controller1 current_user ', current_user)
+    user_roles_names = [role.name for role in current_user.roles]
+    print( current_user.id, current_user.username, current_user.email, user_roles_names)
+
+    objuser = {'gid': 1,
+               'id':current_user.id,
+               'username':current_user.username,
+               'email':current_user.email,
+               'roles':user_roles_names,
+               'credit':0}
+    jsonuser = json.dumps(objuser)
+    mqtt.publish( 'user/create', jsonuser )
+
     if not current_user.is_authenticated:
         return redirect(url_for('main.login'))
         # return redirect( url_for( 'main.login_screen' ) )
@@ -112,8 +125,8 @@ def member_page():
 # The User page is accessible to authenticated users (users that have logged in)
 @main_blueprint.route('/insert_mail',  methods=['GET', 'POST'])
 def mail_page():
-    print('CURRENT USER')
-    print(current_user)
+    # print('CURRENT USER')
+    # print(current_user)
     if not current_user.is_authenticated:
         return redirect(url_for('main.login'))
 
@@ -122,6 +135,12 @@ def mail_page():
         if email:
             current_user.email = email
             db.session.commit()
+
+        print('NEW - EMAIL')
+        print(current_user)
+        # Publish the user creation to create the user in drupal
+        # jsonstring = jsonify(current_user)
+        # mqtt.publish('user/create', current_user)
 
         return redirect( url_for( 'main.member_page' ) )
 

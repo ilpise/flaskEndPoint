@@ -11,8 +11,8 @@ from dataclasses import dataclass
 
 @login_manager.user_loader
 def load_user(user_id):
-    print('user_models.py')
-    print(user_id)
+    print('user_models.py user_id : ', user_id)
+    # print(user_id)
     return User.query.filter_by(id=user_id).first()
 # @login_manager.user_loader
 # def load_user(user_name):
@@ -24,6 +24,7 @@ def load_user(user_id):
 @dataclass
 class User(db.Model, UserMixin):
     id: int
+    uid: int
     active: bool
     username: str
     password: str
@@ -34,7 +35,7 @@ class User(db.Model, UserMixin):
 
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
-    uid = db.Column( db.Integer, nullable=False, unique=True )
+    uid = db.Column( db.Integer, nullable=True, unique=True )
     # The active flag is 1 for DEFAULT this way the user is created active
     active = db.Column('status', db.Boolean(), nullable=False, server_default='1')
 
