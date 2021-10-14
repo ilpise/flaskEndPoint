@@ -4,7 +4,7 @@ ADD . /flaskEndPoint
 
 RUN apt-get update
 # Add packages
-RUN apt-get -y install pcscd swig gcc rustc libpcsclite-dev python3.7-dev
+RUN apt-get -y install pcscd swig gcc rustc musl-dev libssl-dev libffi-dev libpcsclite-dev python3.7-dev
 
 # Debug packages
 RUN apt-get -y install minicom pcsc-tools
