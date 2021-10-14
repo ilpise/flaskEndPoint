@@ -4,7 +4,7 @@ ADD . /flaskEndPoint
 
 RUN apt-get update
 # Add packages
-RUN apt-get -y install python3.7-dev
+RUN apt-get -y install gcc rustc python3.7-dev
 
 # Change to flask app directory and run install
 WORKDIR /flaskEndPoint
