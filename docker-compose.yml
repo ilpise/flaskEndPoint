@@ -15,8 +15,8 @@ services:
       - 5000:5000
     volumes:
       - type: volume
-          source: sqlite-db
-          target: /flaskEndPoint/app/db
+        source: sqlite-db
+        target: /flaskEndPoint/app/db
 
   openplc:
     build: https://github.com/thiagoralves/OpenPLC_v3
