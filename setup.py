@@ -24,7 +24,7 @@ setup(
         #'flaskwebgui',
         'requests',
         'pymodbus',
-        'pyscard',
+        # 'pyscard',
         'eventlet'
     ],
     classifiers=[
