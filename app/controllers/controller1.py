@@ -3,8 +3,8 @@ import json
 
 from flask import Blueprint, redirect, render_template
 from flask import request, url_for, flash, jsonify
-from flask_login import login_user, logout_user
-from flask_user import current_user
+from flask_login import login_user, logout_user, current_user
+# from flask_user import current_user
 import logging
 
 from app import db, mqtt

@@ -1,10 +1,7 @@
 # Copyright 2021 Simone Corti . All rights reserved
 
-from flask_login import UserMixin, login_manager
-# from flask_user import UserMixin
-# from flask_user.forms import RegisterForm
+from flask_login import UserMixin
 from flask_wtf import FlaskForm
-# from werkzeug.security import check_password_hash
 from wtforms import StringField, SubmitField, validators
 from app import db, login_manager
 from dataclasses import dataclass

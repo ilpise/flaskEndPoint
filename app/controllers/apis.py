@@ -5,7 +5,7 @@ import asyncio
 from flask import Blueprint, jsonify, current_app, request
 # from flask_login import current_user
 # import bcrypt
-from flask_user import current_user, UserManager
+from flask_login import current_user
 # from app import user_manager
 # from ..models.user_models import User
 # from app import db, UserManager
