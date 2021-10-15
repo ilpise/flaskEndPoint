@@ -19,7 +19,7 @@ services:
         target: /flaskEndPoint/app/db
 
   openplc:
-    build: https://github.com/thiagoralves/OpenPLC_v3
+    build: https://github.com/thiagoralves/OpenPLC_v3.git
     privileged: true
     ports:
       - 8080:8080
