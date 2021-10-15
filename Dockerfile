@@ -2,12 +2,12 @@
 FROM arm32v7/python:3.7-buster
 ADD . /flaskEndPoint
 
-RUN apt-get update
+# RUN apt-get update
 # Add packages
-RUN apt-get -y install pcscd swig gcc build-essential rustc musl-dev libssl-dev libffi-dev libpcsclite-dev python3.7-dev
+# RUN apt-get -y install python3.7-dev
 
 # Debug packages
-RUN apt-get -y install minicom pcsc-tools
+# RUN apt-get -y install minicom pcsc-tools
 
 # Change to flask app directory and run install
 WORKDIR /flaskEndPoint
